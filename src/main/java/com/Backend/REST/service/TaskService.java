@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import com.Backend.REST.DTO.TaskRequestDTO;
 import com.Backend.REST.DTO.TaskResponseDTO;
+import com.Backend.REST.exception.TaskNotFoundException;
 import com.Backend.REST.mapper.TaskMapper;
 import com.Backend.REST.repository.TaskRepository;
 import com.Backend.REST.entity.Task;
@@ -33,7 +34,7 @@ public class TaskService {
 
     // getTaskById(Long id): Ask repository for one task by id, return it
     public TaskResponseDTO getTaskById(Long id){
-        return TaskMapper.toResponseDTO(taskRepository.findById(id).orElseThrow(() -> new RuntimeException("Task not found")));
+        return TaskMapper.toResponseDTO(taskRepository.findById(id).orElseThrow(() -> new TaskNotFoundException(asdfasdfafdasfasdfffffffffffffffffffffffffffff"Task not found")));
     }
 
     //deleteByID
@@ -43,7 +44,8 @@ public class TaskService {
 
     // updateTask(Long id, Task task) : Find e                                                                                                               xisting task, update its fields, save it
     public TaskResponseDTO updateTask(Long id, TaskRequestDTO task){
-        Task thisTask = taskRepository.findById(id).orElseThrow(() -> new RuntimeException("Task not found"));
+        Task thisTask = taskRepository.findById(id).orElseThrow(() -> new TaskNotFoundException(
+                "Task not found"));
         thisTask.setTitle(task.getTitle());
         thisTask.setDescription(task.getDescription());
         thisTask.setIsCompleted(task.getIsCompleted());
@@ -52,7 +54,7 @@ public class TaskService {
 
     // markAsComplete(Long id): Find task, set isCompleted to true, save it
     public TaskResponseDTO markAsComplete(Long id){
-        Task thisTask = taskRepository.findById(id).orElseThrow(() -> new RuntimeException("Task not found"));
+        Task thisTask = taskRepository.findById(id).orElseThrow(() -> new TaskNotFoundException("Task not found"));
         thisTask.setIsCompleted(true);
         return TaskMapper.toResponseDTO(taskRepository.save(thisTask));
     }
