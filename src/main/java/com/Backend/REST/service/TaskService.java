@@ -34,7 +34,7 @@ public class TaskService {
 
     // getTaskById(Long id): Ask repository for one task by id, return it
     public TaskResponseDTO getTaskById(Long id){
-        return TaskMapper.toResponseDTO(taskRepository.findById(id).orElseThrow(() -> new TaskNotFoundException(asdfasdfafdasfasdfffffffffffffffffffffffffffff"Task not found")));
+        return TaskMapper.toResponseDTO(taskRepository.findById(id).orElseThrow(() -> new TaskNotFoundException("Task not found")));
     }
 
     //deleteByID
