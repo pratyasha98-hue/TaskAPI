@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.ErrorResponse;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -18,6 +19,12 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponseDTO> taskNotFoundHandler(TaskNotFoundException ex){
         ErrorResponseDTO error = new ErrorResponseDTO(404, ex.getMessage(), LocalDateTime.now());
         return new ResponseEntity<ErrorResponseDTO>(error, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ErrorResponseDTO> validationErrorHandler(MethodArgumentNotValidException ex){
+        ErrorResponseDTO error = new ErrorResponseDTO(400, ex.getBindingResult().getFieldError().getDefaultMessage(), LocalDateTime.now());
+        return new ResponseEntity<ErrorResponseDTO>(error, HttpStatus.BAD_REQUEST );
     }
 
 }

@@ -5,6 +5,7 @@ import com.Backend.REST.DTO.TaskRequestDTO;
 import com.Backend.REST.DTO.TaskResponseDTO;
 import com.Backend.REST.entity.Task;
 import com.Backend.REST.service.TaskService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,13 +30,13 @@ public class TaskController {
 
     //createTask() → @PostMapping + @RequestBody
     @PostMapping
-    public TaskResponseDTO createTask(@RequestBody TaskRequestDTO task){
+    public TaskResponseDTO createTask(@Valid @RequestBody  TaskRequestDTO task){
         return taskService.createTask(task);
     }
 
     // updateTask()
     @PutMapping("/{id}")
-    public TaskResponseDTO updateTask(@PathVariable Long id, @RequestBody  TaskRequestDTO task){
+    public TaskResponseDTO updateTask(@PathVariable Long id, @Valid @RequestBody  TaskRequestDTO task){
         return taskService.updateTask(id, task);
     }
 
