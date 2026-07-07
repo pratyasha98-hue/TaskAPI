@@ -5,23 +5,40 @@ import com.Backend.REST.DTO.TaskRequestDTO;
 import com.Backend.REST.DTO.TaskResponseDTO;
 import com.Backend.REST.entity.Task;
 import com.Backend.REST.service.TaskService;
+import com.Backend.REST.types.Priority;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.hibernate.sql.model.ast.builder.TableDeleteBuilderSkipped;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/tasks")
 public class TaskController {
 
-    @Autowired
-    private TaskService taskService;
+
+    private final TaskService taskService;
 
     @GetMapping
-    public List<TaskResponseDTO> getAllTasks(){
-        return taskService.getAllTasks();
+    public Page<TaskResponseDTO> getAllTasks(@RequestParam(required = false) Boolean isCompleted,
+                                               @RequestParam(required = false) Priority priority,
+                                               @RequestParam(required = false, defaultValue = "0") int pageNo,
+                                               @RequestParam(required = false, defaultValue = "5") int pageSize){
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        if(isCompleted == null){
+            return taskService.getTaskByPriority( priority, pageable);
+        }
+        else if(priority == null){
+            return taskService.getTaskByStatus(isCompleted, pageable);
+        }
+        return taskService.getAllTasks(pageable);
     }
+
 
     @GetMapping("/{id}")
     public TaskResponseDTO getTaskById(@PathVariable Long id){
@@ -51,5 +68,14 @@ public class TaskController {
     public TaskResponseDTO markAsComplete(@PathVariable Long id){
         return taskService.markAsComplete(id);
     }
+
+    @GetMapping("/search")
+    public Page<TaskResponseDTO> searchByTitle(@RequestParam(required = true) String title,
+                                               @RequestParam(defaultValue = "0") int pageNo,
+                                               @RequestParam(defaultValue = "5") int pageSize){
+        return taskService.searchTaskByTitle(title, PageRequest.of(pageNo, pageSize));
+    }
+
+
 
 }

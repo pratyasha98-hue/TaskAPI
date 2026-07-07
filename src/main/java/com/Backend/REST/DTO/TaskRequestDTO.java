@@ -1,5 +1,6 @@
 package com.Backend.REST.DTO;
 
+import com.Backend.REST.types.Priority;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -19,4 +20,5 @@ public class TaskRequestDTO {
     @NotBlank
     private String description;
     private Boolean isCompleted;
+    private Priority priority;
 }

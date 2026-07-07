@@ -1,5 +1,6 @@
 package com.Backend.REST.DTO;
 
+import com.Backend.REST.types.Priority;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,4 +18,5 @@ public class TaskResponseDTO {
     private String description;
     private Boolean isCompleted;
     private LocalDateTime createdAt;
+    private Priority priority;
 }

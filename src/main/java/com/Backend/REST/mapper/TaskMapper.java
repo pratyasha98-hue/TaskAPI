@@ -3,6 +3,7 @@ package com.Backend.REST.mapper;
 import com.Backend.REST.DTO.TaskRequestDTO;
 import com.Backend.REST.DTO.TaskResponseDTO;
 import com.Backend.REST.entity.Task;
+import com.Backend.REST.types.Priority;
 
 public class TaskMapper {
 
@@ -12,6 +13,7 @@ public class TaskMapper {
         taskEntity.setDescription(requestDTO.getDescription());
         taskEntity.setTitle(requestDTO.getTitle());
         taskEntity.setIsCompleted(requestDTO.getIsCompleted());
+        taskEntity.setPriority(requestDTO.getPriority());
         return taskEntity;
     }
 
@@ -23,6 +25,7 @@ public class TaskMapper {
         newDTO.setTitle(task.getTitle());
         newDTO.setDescription(task.getDescription());
         newDTO.setIsCompleted(task.getIsCompleted());
+        newDTO.setPriority(task.getPriority());
         return newDTO;
     }
 }
