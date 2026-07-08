@@ -1,20 +1,25 @@
 package com.Backend.REST.DTO;
 
+import com.Backend.REST.types.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
+
 
 
 import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
-@RequiredArgsConstructor
+@NoArgsConstructor
 public class UserResponseDTO {
-    private long uid;
+    private Long uid;
     private String name;
-    private int age;
-    private String emailAddr;
+    private Integer age;
+    private String email;
+    private Role role;
     private LocalDateTime createdAt;
+
+
 
 }

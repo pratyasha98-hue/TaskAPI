@@ -20,5 +20,6 @@ public class TaskRequestDTO {
     @NotBlank
     private String description;
     private Boolean isCompleted;
+    @NotBlank(message = "Role is required")
     private Priority priority;
 }
